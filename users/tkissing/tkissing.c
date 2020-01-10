@@ -2,7 +2,16 @@
 
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    void safely_sethsv(uint16_t hue, uint8_t sat, uint8_t val) {
+#ifdef RGB_MATRIX_H
+        rgb_matrix_sethsv(hue, sat, val);
+#endif
+#ifdef RGBLIGHT_ENABLE
+        rgblight_sethsv(hue, sat, val);
+#endif
+    }
+
+    bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uint8_t temp_mod = get_mods();
     uint8_t temp_osm = get_oneshot_mods();
 
@@ -25,22 +34,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(temp_mod);
             }
             break;
+
         case RGB_M_P:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_WHITE);
+                    safely_sethsv(HSV_WHITE);
                 } else {
+#ifdef RGB_MATRIX_H
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+#endif
                 }
             }
             return false;  // Skip all further processing of this key
         case RGB_M_B:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_RED);
+                    safely_sethsv(HSV_RED);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_BREATHING
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_BREATHING
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+#    endif
 #endif
                 }
             }
@@ -48,10 +62,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_M_G:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_GREEN);
+                    safely_sethsv(HSV_GREEN);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_CYCLE_ALL
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_CYCLE_ALL
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_ALL);
+#    endif
 #endif
                 }
             }
@@ -60,10 +76,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_BLUE);
+                    safely_sethsv(HSV_BLUE);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_BAND_VAL
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_BAND_VAL
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_BAND_VAL);
+#    endif
 #endif
                 }
             }
@@ -71,10 +89,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_M_R:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_YELLOW);
+                    safely_sethsv(HSV_YELLOW);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_LEFT_RIGHT);
+#    endif
 #endif
                 }
             }
@@ -82,10 +102,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_M_SN:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_PINK);
+                    safely_sethsv(HSV_PINK);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_RAINDROPS
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_RAINDROPS
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_RAINDROPS);
+#    endif
 #endif
                 }
             }
@@ -93,10 +115,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_M_SW:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_PURPLE);
+                    safely_sethsv(HSV_PURPLE);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_BAND_SPIRAL_VAL);
+#    endif
 #endif
                 }
             }
@@ -104,10 +128,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_M_X:
             if (record->event.pressed) {
                 if (shifted) {
-                    rgb_matrix_sethsv(HSV_MAGENTA);
+                    safely_sethsv(HSV_MAGENTA);
                 } else {
-#ifndef DISABLE_RGB_MATRIX_SOLID_REACTIVE
+#ifdef RGB_MATRIX_H
+#    ifndef DISABLE_RGB_MATRIX_SOLID_REACTIVE
                     rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE);
+#    endif
 #endif
                 }
             }
