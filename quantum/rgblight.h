@@ -170,6 +170,12 @@ typedef struct _rgblight_status_t {
 #    endif
 } rgblight_status_t;
 
+// This runs after another backlight effect and replaces
+// colors already set
+void rgblight_indicators(void);
+void rgblight_indicators_kb(void);
+void rgblight_indicators_user(void);
+
 /* === Utility Functions ===*/
 void sethsv(uint8_t hue, uint8_t sat, uint8_t val, LED_TYPE *led1);
 void sethsv_raw(uint8_t hue, uint8_t sat, uint8_t val, LED_TYPE *led1);  // without RGBLIGHT_LIMIT_VAL check

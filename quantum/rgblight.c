@@ -832,9 +832,19 @@ void rgblight_task(void) {
 #    endif
         }
     }
+    rgblight_indicators();
 }
 
 #endif /* RGBLIGHT_USE_TIMER */
+
+void rgblight_indicators(void) {
+    rgblight_indicators_kb();
+    rgblight_indicators_user();
+}
+
+__attribute__((weak)) void rgblight_indicators_kb(void) {}
+
+__attribute__((weak)) void rgblight_indicators_user(void) {}
 
 // Effects
 #ifdef RGBLIGHT_EFFECT_BREATHING
