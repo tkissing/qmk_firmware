@@ -2,11 +2,7 @@
 #include "tkissing.h"
 #include "color.h"
 
-enum my_layers {
-    _LAYER_BASE = 0,
-    _LAYER_FN,
-    _LAYER_RGB
-};
+enum my_layers { _LAYER_BASE = 0, _LAYER_FN, _LAYER_RGB };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
